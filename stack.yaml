@@ -1,5 +1,1 @@
-resolver: lts-7.3
-packages:
-- '.'
-extra-deps:
-- network-uri-static-0.1.0.0
+stack-7.10.3.yaml

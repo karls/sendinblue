@@ -1,0 +1,5 @@
+resolver: lts-6.18
+packages:
+- '.'
+extra-deps:
+- network-uri-static-0.1.0.0
