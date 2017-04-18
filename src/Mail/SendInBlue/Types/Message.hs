@@ -1,6 +1,5 @@
 {-# LANGUAGE BangPatterns      #-}
 {-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards   #-}
 {-# LANGUAGE TemplateHaskell   #-}
@@ -155,17 +154,9 @@ data Recipient = Recipient
     , rName    :: !(Maybe FullName)
     }
 
-instance ToJSON [Recipient] where
-    toJSON = object . map toPair
-      where
-        toPair Recipient{..} =
-            emailToText rAddress .= maybe empty unFullName rName
-
-instance {-# OVERLAPS #-} ToJSON (NonEmpty Recipient) where
-    toJSON = object . map toPair . NonEmpty.toList
-      where
-        toPair Recipient{..} =
-            emailToText rAddress .= maybe empty unFullName rName
+instance ToJSON Recipient where
+    toJSON Recipient{..} =
+      object [emailToText rAddress .= maybe empty unFullName rName]
 
 -- | Smart constructor for a 'Recipient' type.
 recipient :: EmailAddress -> Recipient
